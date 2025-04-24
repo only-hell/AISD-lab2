@@ -2,11 +2,11 @@
 #include <cstdlib>
 #include <ctime>
 
-// Шаблонный класс хеш-таблицы с методом цепочек
+// РЁР°Р±Р»РѕРЅРЅС‹Р№ РєР»Р°СЃСЃ С…РµС€-С‚Р°Р±Р»РёС†С‹ СЃ РјРµС‚РѕРґРѕРј С†РµРїРѕС‡РµРє
 template<typename K, typename T>
 class HashTable {
 private:
-    // Узел в цепочке
+    // РЈР·РµР» РІ С†РµРїРѕС‡РєРµ
     struct HashTableEntry {
         K key;
         T value;
@@ -18,7 +18,7 @@ private:
     static const int table_size = 10;
     HashTableEntry** table;
 
-    // Мультипликативная хеш-функция
+    // РњСѓР»СЊС‚РёРїР»РёРєР°С‚РёРІРЅР°СЏ С…РµС€-С„СѓРЅРєС†РёСЏ
     int hash(K key) const {
         const double A = 0.6180339887;
         double product = key * A;
@@ -27,7 +27,7 @@ private:
     }
 
 public:
-    // Конструктор по умолчанию
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
     HashTable() {
         table = new HashTableEntry * [table_size];
         for (int i = 0; i < table_size; ++i) {
@@ -35,7 +35,7 @@ public:
         }
     }
 
-    // Конструктор с генерацией случайных данных
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РіРµРЅРµСЂР°С†РёРµР№ СЃР»СѓС‡Р°Р№РЅС‹С… РґР°РЅРЅС‹С…
     HashTable(int size) {
         table = new HashTableEntry * [table_size];
         for (int i = 0; i < table_size; ++i) {
@@ -49,7 +49,7 @@ public:
         }
     }
 
-    // Конструктор копирования
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
     HashTable(const HashTable& other) {
         table = new HashTableEntry * [table_size];
         for (int i = 0; i < table_size; ++i) {
@@ -62,7 +62,7 @@ public:
         }
     }
 
-    // Деструктор
+    // Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
     ~HashTable() {
         for (int i = 0; i < table_size; ++i) {
             HashTableEntry* current = table[i];
@@ -75,7 +75,7 @@ public:
         delete[] table;
     }
 
-    // Оператор присваивания
+    // РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
     HashTable& operator=(const HashTable& other) {
         if (this == &other) return *this;
 
@@ -101,7 +101,7 @@ public:
         return *this;
     }
 
-    // Вставка нового элемента
+    // Р’СЃС‚Р°РІРєР° РЅРѕРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
     bool insert(K key, const T& value) {
         int index = hash(key);
         HashTableEntry* current = table[index];
@@ -116,7 +116,7 @@ public:
         return true;
     }
 
-    // Вставка или обновление элемента
+    // Р’СЃС‚Р°РІРєР° РёР»Рё РѕР±РЅРѕРІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р°
     void insert_or_assign(K key, T& value) {
         int index = hash(key);
         HashTableEntry* current = table[index];
@@ -133,7 +133,7 @@ public:
         table[index] = new_entry;
     }
 
-    // Проверка наличия значения (не ключа!)
+    // РџСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ Р·РЅР°С‡РµРЅРёСЏ (РЅРµ РєР»СЋС‡Р°!)
     bool contains(T& value) {
         for (int i = 0; i < table_size; ++i) {
             HashTableEntry* current = table[i];
@@ -145,7 +145,7 @@ public:
         return false;
     }
 
-    // Поиск значения по ключу
+    // РџРѕРёСЃРє Р·РЅР°С‡РµРЅРёСЏ РїРѕ РєР»СЋС‡Сѓ
     T* search(K key) {
         int index = hash(key);
         HashTableEntry* current = table[index];
@@ -156,7 +156,7 @@ public:
         return nullptr;
     }
 
-    // Удаление по ключу
+    // РЈРґР°Р»РµРЅРёРµ РїРѕ РєР»СЋС‡Сѓ
     bool erase(K key) {
         int index = hash(key);
         HashTableEntry* current = table[index];
@@ -175,7 +175,7 @@ public:
         return false;
     }
 
-    // Подсчет количества элементов в бакете по ключу
+    // РџРѕРґСЃС‡РµС‚ РєРѕР»РёС‡РµСЃС‚РІР° СЌР»РµРјРµРЅС‚РѕРІ РІ Р±Р°РєРµС‚Рµ РїРѕ РєР»СЋС‡Сѓ
     int count(K key) const {
         int index = hash(key);
         int count = 0;
@@ -187,7 +187,7 @@ public:
         return count;
     }
 
-    // Вывод всех элементов
+    // Р’С‹РІРѕРґ РІСЃРµС… СЌР»РµРјРµРЅС‚РѕРІ
     void print() const {
         printf("HashTable contents:\n");
         for (int i = 0; i < table_size; ++i) {
@@ -204,7 +204,7 @@ int main() {
     srand((unsigned int)time(0));
     HashTable<int, int> table(50);
 
-    // Подсчет числа повторений каждого ключа
+    // РџРѕРґСЃС‡РµС‚ С‡РёСЃР»Р° РїРѕРІС‚РѕСЂРµРЅРёР№ РєР°Р¶РґРѕРіРѕ РєР»СЋС‡Р°
     for (int i = 1; i <= 20; ++i) {
         int cnt = table.count(i);
         printf("Bucket with key %d has %d elements.\n", i, cnt);
